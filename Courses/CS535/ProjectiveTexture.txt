@@ -1,0 +1,7 @@
+void FrameBuffer::DrawPProjectiveTexture(TMesh** tms, PPC* ppc_Projector, char* textureDir){
+	FrameBuffer* texture = new FrameBuffer(0,0,0,0);
+	texture->LoadTiff(textureDir);
+	FrameBuffer* fb_Projector = new FrameBuffer(0,0,ppc_Projector->w,ppc_Projector->h);
+
+
+}
