@@ -1,0 +1,5 @@
+Instruction
+
+更新列表：按照正确格式写好日程并上传即可（txt格式）
+正确格式可以通过“Download Template”按钮下载（注意：事项间逗号为英文）
+已经上传的日程可以通过“Download My Schedule”按钮下载
