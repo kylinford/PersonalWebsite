@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body {
+        //width: 1200px;
+        margin: 10px 100px;
+    }
+
+    svg text {
+        font-size: 12px;
+    }
+
+    rect {
+        shape-rendering: crispEdges;
+    }
+</style>
+<body>
+
+<center>
+<h1>Data Visualizaiton Design</h1>
+</center>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="d3.min.js"></script>
+    <script src="biPartite.js"></script>
+    <script>
+var sales_data=[
+['Communicable', '	Infectious and parasitic diseases', '	Africa', 4818],
+['Communicable', '	Respiratory infections', '	Africa', 1400],
+['Communicable', '	Maternal conditions', '	Africa', 256],
+['Communicable', '	Perinatal conditions (h)', '	Africa', 973],
+['Communicable', '	Nutritional deficiencies', '	Africa', 154],
+['Noncommunicable', '	Malignant neoplasms', '	Africa', 487],
+['Noncommunicable', '	Other neoplasms', '	Africa', 18],
+['Noncommunicable', '	Diabetes mellitus', '	Africa', 172],
+['Noncommunicable', '	Endocrine disorders', '	Africa', 67],
+['Noncommunicable', '	Neuropsychiatric conditions', '	Africa', 127],
+['Noncommunicable', '	Sense organ diseases', '	Africa', 0],
+['Noncommunicable', '	Cardiovascular diseases', '	Africa', 1212],
+['Noncommunicable', '	Respiratory diseases', '	Africa', 311],
+['Noncommunicable', '	Digestive diseases', '	Africa', 223],
+['Noncommunicable', '	Genitourinary diseases', '	Africa', 104],
+['Noncommunicable', '	Skin diseases', '	Africa', 17],
+['Noncommunicable', '	Musculoskeletal diseases', '	Africa', 17],
+['Noncommunicable', '	Congenital anomalies', '	Africa', 97],
+['Noncommunicable', '	Oral conditions', '	Africa', 1],
+['Injuries', '	Unintentional injuries', '	Africa', 509],
+['Injuries', '	Intentional injuries', '	Africa', 307],
+['Communicable', '	Infectious and parasitic diseases', '	Americas', 346],
+['Communicable', '	Respiratory infections', '	Americas', 259],
+['Communicable', '	Maternal conditions', '	Americas', 16],
+['Communicable', '	Perinatal conditions (h)', '	Americas', 149],
+['Communicable', '	Nutritional deficiencies', '	Americas', 56],
+['Noncommunicable', '	Malignant neoplasms', '	Americas', 1175],
+['Noncommunicable', '	Other neoplasms', '	Americas', 29],
+['Noncommunicable', '	Diabetes mellitus', '	Americas', 254],
+['Noncommunicable', '	Endocrine disorders', '	Americas', 66],
+['Noncommunicable', '	Neuropsychiatric conditions', '	Americas', 279],
+['Noncommunicable', '	Sense organ diseases', '	Americas', 0],
+['Noncommunicable', '	Cardiovascular diseases', '	Americas', 1957],
+['Noncommunicable', '	Respiratory diseases', '	Americas', 397],
+['Noncommunicable', '	Digestive diseases', '	Americas', 306],
+['Noncommunicable', '	Genitourinary diseases', '	Americas', 151],
+['Noncommunicable', '	Skin diseases', '	Americas', 13],
+['Noncommunicable', '	Musculoskeletal diseases', '	Americas', 30],
+['Noncommunicable', '	Congenital anomalies', '	Americas', 51],
+['Noncommunicable', '	Oral conditions', '	Americas', 0],
+['Injuries', '	Unintentional injuries', '	Americas', 340],
+['Injuries', '	Intentional injuries', '	Americas', 236],
+['Communicable', '	Infectious and parasitic diseases', '	South-East Asia', 2669],
+['Communicable', '	Respiratory infections', '	South-East Asia', 1415],
+['Communicable', '	Maternal conditions', '	South-East Asia', 168],
+['Communicable', '	Perinatal conditions (h)', '	South-East Asia', 1196],
+['Communicable', '	Nutritional deficiencies', '	South-East Asia', 178],
+['Noncommunicable', '	Malignant neoplasms', '	South-East Asia', 1194],
+['Noncommunicable', '	Other neoplasms', '	South-East Asia', 19],
+['Noncommunicable', '	Diabetes mellitus', '	South-East Asia', 279],
+['Noncommunicable', '	Endocrine disorders', '	South-East Asia', 35],
+['Noncommunicable', '	Neuropsychiatric conditions', '	South-East Asia', 274],
+['Noncommunicable', '	Sense organ diseases', '	South-East Asia', 1],
+['Noncommunicable', '	Cardiovascular diseases', '	South-East Asia', 3872],
+['Noncommunicable', '	Respiratory diseases', '	South-East Asia', 1055],
+['Noncommunicable', '	Digestive diseases', '	South-East Asia', 515],
+['Noncommunicable', '	Genitourinary diseases', '	South-East Asia', 278],
+['Noncommunicable', '	Skin diseases', '	South-East Asia', 15],
+['Noncommunicable', '	Musculoskeletal diseases', '	South-East Asia', 18],
+['Noncommunicable', '	Congenital anomalies', '	South-East Asia', 125],
+['Noncommunicable', '	Oral conditions', '	South-East Asia', 0],
+['Injuries', '	Unintentional injuries', '	South-East Asia', 1329],
+['Injuries', '	Intentional injuries', '	South-East Asia', 391],
+['Communicable', '	Infectious and parasitic diseases', '	Europe', 497],
+['Communicable', '	Respiratory infections', '	Europe', 358],
+['Communicable', '	Maternal conditions', '	Europe', 22],
+['Communicable', '	Perinatal conditions (h)', '	Europe', 151],
+['Communicable', '	Nutritional deficiencies', '	Europe', 27],
+['Noncommunicable', '	Malignant neoplasms', '	Europe', 1891],
+['Noncommunicable', '	Other neoplasms', '	Europe', 42],
+['Noncommunicable', '	Diabetes mellitus', '	Europe', 165],
+['Noncommunicable', '	Endocrine disorders', '	Europe', 41],
+['Noncommunicable', '	Neuropsychiatric conditions', '	Europe', 295],
+['Noncommunicable', '	Sense organ diseases', '	Europe', 0],
+['Noncommunicable', '	Cardiovascular diseases', '	Europe', 4851],
+['Noncommunicable', '	Respiratory diseases', '	Europe', 392],
+['Noncommunicable', '	Digestive diseases', '	Europe', 436],
+['Noncommunicable', '	Genitourinary diseases', '	Europe', 124],
+['Noncommunicable', '	Skin diseases', '	Europe', 12],
+['Noncommunicable', '	Musculoskeletal diseases', '	Europe', 28],
+['Noncommunicable', '	Congenital anomalies', '	Europe', 42],
+['Noncommunicable', '	Oral conditions', '	Europe', 0],
+['Injuries', '	Unintentional injuries', '	Europe', 601],
+['Injuries', '	Intentional injuries', '	Europe', 245],
+['Communicable', '	Infectious and parasitic diseases', '	Eastern Mediterranean', 658],
+['Communicable', '	Respiratory infections', '	Eastern Mediterranean', 392],
+['Communicable', '	Maternal conditions', '	Eastern Mediterranean', 55],
+['Communicable', '	Perinatal conditions (h)', '	Eastern Mediterranean', 400],
+['Communicable', '	Nutritional deficiencies', '	Eastern Mediterranean', 47],
+['Noncommunicable', '	Malignant neoplasms', '	Eastern Mediterranean', 283],
+['Noncommunicable', '	Other neoplasms', '	Eastern Mediterranean', 21],
+['Noncommunicable', '	Diabetes mellitus', '	Eastern Mediterranean', 57],
+['Noncommunicable', '	Endocrine disorders', '	Eastern Mediterranean', 27],
+['Noncommunicable', '	Neuropsychiatric conditions', '	Eastern Mediterranean', 91],
+['Noncommunicable', '	Sense organ diseases', '	Eastern Mediterranean', 1],
+['Noncommunicable', '	Cardiovascular diseases', '	Eastern Mediterranean', 1122],
+['Noncommunicable', '	Respiratory diseases', '	Eastern Mediterranean', 158],
+['Noncommunicable', '	Digestive diseases', '	Eastern Mediterranean', 153],
+['Noncommunicable', '	Genitourinary diseases', '	Eastern Mediterranean', 85],
+['Noncommunicable', '	Skin diseases', '	Eastern Mediterranean', 4],
+['Noncommunicable', '	Musculoskeletal diseases', '	Eastern Mediterranean', 3],
+['Noncommunicable', '	Congenital anomalies', '	Eastern Mediterranean', 66],
+['Noncommunicable', '	Oral conditions', '	Eastern Mediterranean', 0],
+['Injuries', '	Unintentional injuries', '	Eastern Mediterranean', 305],
+['Injuries', '	Intentional injuries', '	Eastern Mediterranean', 154],
+['Communicable', '	Infectious and parasitic diseases', '	West Pacific', 684],
+['Communicable', '	Respiratory infections', '	West Pacific', 470],
+['Communicable', '	Maternal conditions', '	West Pacific', 17],
+['Communicable', '	Perinatal conditions (h)', '	West Pacific', 342],
+['Communicable', '	Nutritional deficiencies', '	West Pacific', 24],
+['Noncommunicable', '	Malignant neoplasms', '	West Pacific', 2394],
+['Noncommunicable', '	Other neoplasms', '	West Pacific', 32],
+['Noncommunicable', '	Diabetes mellitus', '	West Pacific', 208],
+['Noncommunicable', '	Endocrine disorders', '	West Pacific', 64],
+['Noncommunicable', '	Neuropsychiatric conditions', '	West Pacific', 195],
+['Noncommunicable', '	Sense organ diseases', '	West Pacific', 0],
+['Noncommunicable', '	Cardiovascular diseases', '	West Pacific', 4080],
+['Noncommunicable', '	Respiratory diseases', '	West Pacific', 1724],
+['Noncommunicable', '	Digestive diseases', '	West Pacific', 419],
+['Noncommunicable', '	Genitourinary diseases', '	West Pacific', 185],
+['Noncommunicable', '	Skin diseases', '	West Pacific', 4],
+['Noncommunicable', '	Musculoskeletal diseases', '	West Pacific', 28],
+['Noncommunicable', '	Congenital anomalies', '	West Pacific', 59],
+['Noncommunicable', '	Oral conditions', '	West Pacific', 0],
+['Injuries', '	Unintentional injuries', '	West Pacific', 842],
+['Injuries', '	Intentional injuries', '	West Pacific', 346],
+];
+
+var width = 1500, height = 610, margin ={b:0, t:40, l:200, r:50};
+
+var svg = d3.select("body")
+	.append("svg").attr('width',width).attr('height',(height+margin.b+margin.t))
+	.append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
+
+var data = [
+	{data:bP.partData(sales_data,2,0), id:'SalesAttempts', header:["Region","Country", "Death by general reason"]},
+	{ data: bP.partData(sales_data, 2, 1), id: 'Sales', header: ["Region", "Cause", "Death by specific reason"] }
+];
+
+bP.draw(data, svg);
+
+    </script>
+
+<center>
+<br/><br/><br/>
+<a href="Edited%20data.txt">Download Data</a>
+<hr/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+<h1>Solar Panel System</h1>
+
+
+<div style="width:40%; text-align:center; display:inline-block;margin:20px;">
+	<img src="image/420759676704482855.jpg" style="width:100%; ">
+	<p style="font-size:30px;">sssssssssssssss</p>
+</div>
+<div style="width:40%; text-align:center; display:inline-block;margin:20px;">
+	<img src="image/724934556015081861.jpg" style="width:100%; ">
+	<p style="font-size:30px;">sssssssssssssss</p>
+</div>
+<br/>
+<a href="DesignDocument.pdf">Download Design Document</a>
+<br/>
+<a href="">NAME NEEDED</a>
+<hr/>
+<br/><br/><br/><br/><br/><br/>
+</center>
+</body>
